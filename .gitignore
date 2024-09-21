@@ -1,0 +1,18 @@
+# python generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# venv
+.venv
+
+
+.vscode/
+
+requirements-dev.lock
+requirements.lock
+
+glimshow/_glimshow_impl/
