@@ -25,15 +25,11 @@ execute_process(
   list(APPEND CMAKE_PREFIX_PATH "${NB_DIR}")
   find_package(nanobind CONFIG REQUIRED)
   
-add_subdirectory("glimshow/cpp")
+# source directory
+set(SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/glimshow/cpp")
 
-# Compile extension module with size optimization and add the library
-nanobind_add_module(_glimshow_impl binding.cpp gl_imshow.cpp glsl_program_wrapper.cpp)
-
-# include_directories("glfw/include")
-
-# add_subdirectory( glfw )
-# list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}")
+# Compile extension module
+nanobind_add_module(_glimshow_impl "${SOURCE_DIR}/binding.cpp" "${SOURCE_DIR}/gl_imshow.cpp" "${SOURCE_DIR}/glsl_program_wrapper.cpp")
 
 # GLFW
 # find_package(glfw3 REQUIRED)
