@@ -1,0 +1,29 @@
+[project]
+name = "pyglimshow"
+version = "0.1.0"
+description = "OpenGL based imshow in Python"
+authors = [
+    { name = "Ryota Maeda", email = "42407614+elerac@users.noreply.github.com" }
+]
+dependencies = [
+    "nanobind>=2.1.0",
+    "typing-extensions>=4.12.2",
+    "numpy>=1.24.4",
+    "opencv-python>=4.10.0.84",
+]
+readme = "README.md"
+requires-python = ">= 3.8"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["glimshow"]
