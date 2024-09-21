@@ -28,8 +28,10 @@ const std::string myshader_frag =
 
 void GL2dImagePanel::init()
 {
-    program.compileShader("myshader.vert", GLSLShaderType::VERTEX);
-    program.compileShader("myshader.frag", GLSLShaderType::FRAGMENT);
+    // program.compileShader("myshader.vert", GLSLShaderType::VERTEX);
+    // program.compileShader("myshader.frag", GLSLShaderType::FRAGMENT);
+    program.compileShader(myshader_vert, GLSLShaderType::VERTEX);
+    program.compileShader(myshader_frag, GLSLShaderType::FRAGMENT);
     program.link();
 
     //  ------------------------------------------------------------

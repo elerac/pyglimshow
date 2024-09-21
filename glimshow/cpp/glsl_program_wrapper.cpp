@@ -32,15 +32,19 @@ std::string GLSLProgramWrapper::loadFileAsStr(const char *filename)
     return ss.str();
 }
 
-void GLSLProgramWrapper::compileShader(const char *filename, GLSLShaderType type)
+// void GLSLProgramWrapper::compileShader(const char *filename, GLSLShaderType type)
+// {
+//     std::string str = loadFileAsStr(filename);
+
+void GLSLProgramWrapper::compileShader(const std::string &str, GLSLShaderType type)
 {
-    std::string str = loadFileAsStr(filename);
     const char *code = str.c_str();
 
     const GLuint sHandle = glCreateShader((GLenum)type);
     if (!sHandle)
     {
-        std::cerr << "Failed to create shader : " << filename << std::endl;
+        // std::cerr << "Failed to create shader : " << filename << std::endl;
+        std::cerr << "Failed to create shader : " << str << std::endl;
         exit(1);
     }
 
@@ -51,7 +55,8 @@ void GLSLProgramWrapper::compileShader(const char *filename, GLSLShaderType type
     glGetShaderiv(sHandle, GL_COMPILE_STATUS, &status);
     if (status == GL_FALSE)
     {
-        std::cerr << "Shader Compile Error in " << filename << std::endl;
+        // std::cerr << "Shader Compile Error in " << filename << std::endl;
+        std::cerr << "Shader Compile Error in " << str << std::endl;
 
         GLsizei bufSize;
         glGetShaderiv(sHandle, GL_INFO_LOG_LENGTH, &bufSize);

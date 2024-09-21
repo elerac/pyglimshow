@@ -35,7 +35,8 @@ public:
     GLSLProgramWrapper();
     ~GLSLProgramWrapper();
 
-    void compileShader(const char *, GLSLShaderType);
+    // void compileShader(const char *, GLSLShaderType);
+    void compileShader(const std::string &, GLSLShaderType);
 
     void link();
 
