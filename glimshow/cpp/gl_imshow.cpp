@@ -5,6 +5,27 @@
 GL2dImagePanel::GL2dImagePanel(size_t img_width, size_t img_height)
     : img_width(img_width), img_height(img_height) {}
 
+const std::string myshader_vert =
+    "#version 450 core\n"
+    "in vec3 VertexPosition;\n"
+    "in vec2 TextureCoordinate;\n"
+    "out vec2 texcoord;\n"
+    "void main() {\n"
+    "    gl_Position = vec4(VertexPosition, 1.0);\n"
+    "    texcoord = TextureCoordinate;\n"
+    "}\n";
+
+const std::string myshader_frag =
+    "#version 450 core\n"
+    "in vec2 texcoord;\n"
+    "out vec4 FragColor;\n"
+    "uniform sampler2D tex;\n"
+    "void main() {\n"
+    "    FragColor = texture(tex, texcoord);\n"
+    "    // FragColor = vec4(texcoord, 0.0, 0.5);\n"
+    "    // FragColor = vec4(1.0, 0.0, 0.0, 0.5);\n"
+    "}\n";
+
 void GL2dImagePanel::init()
 {
     program.compileShader("myshader.vert", GLSLShaderType::VERTEX);
