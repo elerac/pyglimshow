@@ -95,10 +95,6 @@ void GL2dImagePanel::init()
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glBindTexture(GL_TEXTURE_2D, 0);
     }
-
-    GLint maxTextureUnits;
-    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
-    std::cout << "Maximum texture image units: " << maxTextureUnits << std::endl;
 }
 
 void GL2dImagePanel::updateImage(const uint8_t *data)
