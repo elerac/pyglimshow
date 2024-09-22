@@ -9,12 +9,18 @@ wheels/
 # venv
 .venv
 
-
+# vscode
 .vscode/
 
+# For rye
 requirements-dev.lock
 requirements.lock
 
+# Compiled binary
 pyglimshow/_pyglimshow_impl/
 
+# Captured images
 captured/
+
+# Illustrator file
+*.ai
