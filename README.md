@@ -9,7 +9,7 @@ The core rendering program is borrowed from [kamino410/gl_imshow](https://github
 You first need to clone this repository.
 
 ```shell
-git clone --recursive-submodules https://github.com/elerac/pyglimshow.git
+git clone --recursive-submodules https://github.com/elerac/pypyglimshow.git
 ```
 
 To build the C++ extension, you need to prepare the build environment of OpenGL through cmake. GLFW and GLEW are downloaded as submodules. As a Python environment, you need to prepare [nanobind](https://github.com/wjakob/nanobind).
@@ -20,13 +20,13 @@ This repository includes a script to build the C++ code. You can build the code 
 python build_cpp.py
 ```
 
-The built binary is saved to the `glimshow/` directory, and you can import the Python module using the following code.
+The built binary is saved to the `pyglimshow/` directory, and you can import the Python module using the following code.
 
 ```python
-import glimshow
+import pyglimshow
 ```
 
-Once the compilation is complete, you can relocate the `glimshow/` directory to your working directory.
+Once the compilation is complete, you can relocate the `pyglimshow/` directory to your working directory.
 
 ## Usage
 
@@ -35,10 +35,10 @@ The following code is a simple example of showing the image on fullscreen.
 ```python
 import time
 import numpy as np
-import glimshow
+import pyglimshow
 
 # Initialize a window
-screen = glimshow.FullScreen()
+screen = pyglimshow.FullScreen()
 
 # Get the screen size
 width = screen.width

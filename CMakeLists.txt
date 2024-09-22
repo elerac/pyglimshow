@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15...3.27)
-project(_glimshow_impl)
+project(_pyglimshow_impl)
 
 if(CMAKE_VERSION VERSION_LESS 3.18)
   set(DEV_MODULE Development)
@@ -26,10 +26,10 @@ execute_process(
   find_package(nanobind CONFIG REQUIRED)
   
 # source directory
-set(SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/glimshow/cpp")
+set(SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/pyglimshow/cpp")
 
 # Compile extension module
-nanobind_add_module(_glimshow_impl "${SOURCE_DIR}/binding.cpp" "${SOURCE_DIR}/gl_imshow.cpp" "${SOURCE_DIR}/glsl_program_wrapper.cpp")
+nanobind_add_module(_pyglimshow_impl "${SOURCE_DIR}/binding.cpp" "${SOURCE_DIR}/gl_imshow.cpp" "${SOURCE_DIR}/glsl_program_wrapper.cpp")
 
 # GLFW
 # find_package(glfw3 REQUIRED)
@@ -52,4 +52,4 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/ext/glfw")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/ext/glew-cmake")
 
 # Link the library to the executable
-target_link_libraries(_glimshow_impl PRIVATE glfw OpenGL::GL libglew_static)
+target_link_libraries(_pyglimshow_impl PRIVATE glfw OpenGL::GL libglew_static)

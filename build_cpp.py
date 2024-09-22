@@ -26,10 +26,10 @@ def main():
     green_print("Finished building nanobind module")
 
     # In windows, copy the built module
-    # and rename Debug to _glimshow_impl
+    # and rename Debug to _pyglimshow_impl
     if os.name == "nt":
         src = f"build/{args.config}"
-        dst = "glimshow/_glimshow_impl"
+        dst = "pyglimshow/_pyglimshow_impl"
         if os.path.exists(dst):
             shutil.rmtree(dst)
         shutil.copytree(src, dst)
@@ -37,19 +37,19 @@ def main():
         raise
 
     # Generate __init__.py
-    with open("glimshow/_glimshow_impl/__init__.py", "w") as f:
-        f.write("from ._glimshow_impl import *")
+    with open("pyglimshow/_pyglimshow_impl/__init__.py", "w") as f:
+        f.write("from ._pyglimshow_impl import *")
 
     green_print(f"Moved {src} to {dst}, and generated __init__.py")
 
     # Generate pyi file
-    import glimshow
+    import pyglimshow
 
-    module = glimshow._glimshow_impl._glimshow_impl
+    module = pyglimshow._pyglimshow_impl._pyglimshow_impl
     sg = StubGen(module)
     sg.put(module)
     pyi = sg.get()
-    with open("glimshow/_glimshow_impl/__init__.pyi", "w") as f:
+    with open("pyglimshow/_pyglimshow_impl/__init__.pyi", "w") as f:
         f.write(pyi)
 
     green_print("Generated pyi file")

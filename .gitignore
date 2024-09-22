@@ -15,4 +15,4 @@ wheels/
 requirements-dev.lock
 requirements.lock
 
-glimshow/_glimshow_impl/
+pyglimshow/_pyglimshow_impl/

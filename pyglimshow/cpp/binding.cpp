@@ -44,7 +44,7 @@ public:
         height = mode->height;
 
         // Create a window
-        window = glfwCreateWindow(width, height, "glimshow", primaryMonitor, NULL);
+        window = glfwCreateWindow(width, height, "pyglimshow", primaryMonitor, NULL);
 
         if (window == NULL)
         {
@@ -135,7 +135,7 @@ public:
     // }
 };
 
-NB_MODULE(_glimshow_impl, m)
+NB_MODULE(_pyglimshow_impl, m)
 {
     // m.def("add", [](int a, int b)
     //       { return a + b; });
