@@ -9,7 +9,7 @@ The core rendering program is borrowed from [kamino410/gl_imshow](https://github
 You first need to clone this repository.
 
 ```shell
-git clone --recursive-submodules https://github.com/elerac/pypyglimshow.git
+git clone --recursive-submodules https://github.com/elerac/pyglimshow.git
 ```
 
 To build the C++ extension, you need to prepare the build environment of OpenGL through cmake. GLFW and GLEW are downloaded as submodules. As a Python environment, you need to prepare [nanobind](https://github.com/wjakob/nanobind).
@@ -54,7 +54,7 @@ screen.imshow(img_rgb)
 time.sleep(3)
 ```
 
-The "imshow" method calls the ["glfwSwapBuffers"](https://www.glfw.org/docs/3.0/group__context.html#ga15a5a1ee5b3c2ca6b15ca209a12efd14) function, which swaps the image and waits for the swap to finish using the vsync feature. This ensures that the image is changed after the "imshow" method is finished. However, I have found that vsync does not always work properly on my Windows, which may be a limitation of OpenGL/GLFW.
+The "imshow" method calls the ["glfwSwapBuffers"](https://www.glfw.org/docs/3.0/group__context.html#ga15a5a1ee5b3c2ca6b15ca209a12efd14) function, which swaps the image and waits for the swap using vsync. This ensures that the image is changed after the "imshow" method is finished. However, I have found that vsync does not always work properly on my Windows, which may be a limitation of GLFW. I'll discuss this issue for procam synchronization capture in the next section.
 
 If you are working on time-sensitive tasks, uploading and rendering a large image may be crucial. You can use "set_next"and "swap_buffers" methods instead of "imshow".
 
