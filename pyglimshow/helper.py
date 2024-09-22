@@ -12,7 +12,26 @@ def put_text_centered(img, text, font, fontscale, color, thickness):
 
 
 def rand_color_image(size: Tuple[int, int], hue: Optional[int] = None, sat: Optional[int] = None, val: Optional[int] = None) -> npt.NDArray[np.uint8]:
-    h, w = size
+    """Generate a random color image.
+
+    Parameters
+    ----------
+    size : Tuple[int, int]
+        Image size (width, height).
+    hue : Optional[int], optional
+        Hue value (0-179), by default None
+    sat : Optional[int], optional
+        Saturation value (0-255), by default None
+    val : Optional[int], optional
+        Value value (0-255), by default None
+
+    Returns
+    -------
+    npt.NDArray[np.uint8]
+        Random color image. (height, width, 3) shape.
+    """
+
+    w, h = size
 
     if hue is None:
         hue = np.random.randint(0, 180)
@@ -26,21 +45,37 @@ def rand_color_image(size: Tuple[int, int], hue: Optional[int] = None, sat: Opti
     return img
 
 
-def countup_images(size: Tuple[int, int], num: int = 120) -> List[npt.NDArray[np.uint8]]:
+def gen_countup_imglist(size: Tuple[int, int], num: int, hue: Optional[int] = None, sat: int = 140, val: int = 160) -> List[npt.NDArray[np.uint8]]:
+    """Generate a list of images with count-up numbers.
+
+    Parameters
+    ----------
+    size : Tuple[int, int]
+        Image size (width, height).
+    num : int
+        Number of images.
+    hue : Optional[int], optional
+        Hue value (0-179), by default None
+    sat : int, optional
+        Saturation value (0-255), by default 140
+    val : int, optional
+        Value value (0-255), by default 160
+
+    Returns
+    -------
+    List[npt.NDArray[np.uint8]]
+        List of images. Each image has a count-up number.
+    """
+
     zfill_w = len(str(num))
-    h, w = size
+    w, h = size
     image_list = []
     for i in range(num):
-        image = rand_color_image((h, w), sat=140, val=160)
-        image = put_text_centered(image, f"{i}".zfill(zfill_w), cv2.FONT_HERSHEY_SIMPLEX, 30, (255, 255, 255), 60)
-        image_list.append(image)
-    return image_list
-
-
-def gray_images(size: Tuple[int, int], num: int = 25) -> List[npt.NDArray[np.uint8]]:
-    h, w = size
-    image_list = []
-    for i in range(num):
-        image = np.full((h, w, 3), 128, dtype=np.uint8)
+        image = rand_color_image((h, w), hue, sat, val)
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        fontscale = 30.0 * h / 2160.0
+        color = (255, 255, 255)
+        thickness = int(fontscale * 2)
+        image = put_text_centered(image, f"{i}".zfill(zfill_w), font, fontscale, color, thickness)
         image_list.append(image)
     return image_list
