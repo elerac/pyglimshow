@@ -1,7 +1,7 @@
 [project]
 name = "pyglimshow"
 version = "0.1.0"
-description = "OpenGL based imshow in Python"
+description = "Display an image via OpenGL in Python"
 authors = [
     { name = "Ryota Maeda", email = "42407614+elerac@users.noreply.github.com" }
 ]
