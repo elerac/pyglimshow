@@ -45,7 +45,7 @@ width = screen.width
 height = screen.height
 
 # Create an image
-img_rgb = np.fromfunction(lambda y, x, c: 255 * (c == 0) + x / (width - 1) * 255 * (c == 1) + y / (height - 1) * 255 * (c == 2), (height, width, 3)).astype(np.uint8)
+img_rgb = np.fromfunction(lambda y, x, c: 128 * (c == 2) + x / (width - 1) * 255 * (c == 0) + y / (height - 1) * 255 * (c == 1), (height, width, 3)).astype(np.uint8)
 
 # Display the image
 screen.imshow(img_rgb)
@@ -93,10 +93,10 @@ During the capturing process, the camera will capture the following sequence of 
 
 ### Result
 
-I have tested the ad-hoc solution on my Windows machine with a 60 Hz monitor, which is connected to the NVIDIA GeForce RTX 4070 GPU via an HDMI cable. The camera is FLIR Blackfly S with a USB 3.0 connection. The code is attached in `procam_capture.py`.
+I have tested the ad-hoc solution on my Windows machine with a 60 Hz monitor (SAMSUNG, U32J590UQK), which is connected to the NVIDIA GeForce RTX 4070 GPU via an HDMI cable. The camera is FLIR Blackfly S (BFS-U3-13Y3C). The code is attached in `procam_capture.py`.
 
 The following image is captured images. I put the number of structured light images in the center of each image, and the background is red/green/blue in the order of the number. I used 30 dummy images (gray color) before and after the structured light images. Please zoom in on the image to see the numbers.
 
 ![captured_screenshot](docs/captured_screenshot.jpg)
 
-The captured images mainly show sequential numbers, but some images have the ghost of the previous/next image. This issue remains a limitation of this method.
+The captured images mainly show sequential numbers, but some images have the ghost of the previous/next image. And also, synchronization sometimes fails. These issues remain a limitation of this method.
