@@ -1,7 +1,6 @@
 import time
 import numpy as np
 import pyglimshow
-import pyglimshow.helper
 
 # Initialize a window
 screen = pyglimshow.FullScreen()
