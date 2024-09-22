@@ -79,16 +79,16 @@ public:
         glfwPollEvents();
         glViewport(0, 0, width, height);
 
-        uint8_t *data = new uint8_t[width * height * 3];
-        std::fill(data, data + width * height * 3, 128);
-        for (int i = 0; i < 32; i++)
-        {
-            imgPanel->updateImage(data);
-            imgPanel->draw();
-            glfwSwapBuffers(window);
-            glfwPollEvents();
-        }
-        delete[] data;
+        // uint8_t *data = new uint8_t[width * height * 3];
+        // std::fill(data, data + width * height * 3, 128);
+        // for (int i = 0; i < 32; i++)
+        // {
+        //     imgPanel->updateImage(data);
+        //     imgPanel->draw();
+        //     glfwSwapBuffers(window);
+        //     glfwPollEvents();
+        // }
+        // delete[] data;
     }
 
     ~FullScreen()
