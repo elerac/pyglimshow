@@ -54,7 +54,7 @@ screen.imshow(img_rgb)
 time.sleep(3)
 ```
 
-The "imshow" method calls the ["glfwSwapBuffers"](https://www.glfw.org/docs/3.0/group__context.html#ga15a5a1ee5b3c2ca6b15ca209a12efd14) function, which swaps the image and waits for the swap using vsync. This ensures that the image is changed after the "imshow" method is finished. However, I have found that vsync does not always work properly on my Windows, which may be a limitation of GLFW. I'll discuss this issue for procam synchronization capture in the next section.
+The "imshow" method calls the ["glfwSwapBuffers"](https://www.glfw.org/docs/3.0/group__context.html#ga15a5a1ee5b3c2ca6b15ca209a12efd14) function, which swaps the image and waits for the swap using vsync. This ensures that the image is changed after the "imshow" method is finished. However, I have found that vsync can not always be utilized for synchronized image capture. I'll discuss this issue for procam synchronization capture in the next section.
 
 If you are working on time-sensitive tasks, uploading and rendering a large image may be crucial. You can use "set_next"and "swap_buffers" methods instead of "imshow".
 
@@ -68,3 +68,35 @@ screen.set_next(img_rgb)
 screen.swap_buffers()
 ```
 
+## Projector-Camera Synchronization Capture
+
+To achieve fast structured light capture, we need to be able to swap images at the display refresh rate and ensure that the projector (or display) and camera can capture images in sync reliably. The pyglimshow provides a fast imshow function via OpenGl backend, and thus, we can use the vertical synchronization (VSync) feature in GLFW to wait until the buffer is swapped.
+
+### Problem
+
+I thought if I execute a camera trigger after finishing the glfwSwapBuffers function, the camera captures the swapped image from a projector. I tested it on my Windows machine with a 60 Hz monitor but found unexpected behavior. Here is my observation of display-camera synchronization capture with vsync.
+
+- The displayed image tends to be delayed. The camera captures an image that should be displayed in the previous few frames. And this delay occurs randomly.
+- The "glfwSwapBuffers" function occasionally does not wait at 60Hz; it finishes the execution immediately. This failer case tends to occur at first several frames, and it is getting stable and waiting appropriately.
+
+Finding the exact cause and fixing the bug seems difficult because there are several possible factors, such as OpenGL, OS, GPU, and display, which are hard for us to control.
+
+### Ad-hoc Solution
+
+In order to bypass the above issue, I suggest the following procedure for capturing with a projector and camera. This procedure employs the extra dummy images before and after capturing structured light images. 
+
+![procam_sync_adhoc_imshow](docs/procam_sync_adhoc_imshow.png)
+
+During the capturing process, the camera will capture the following sequence of images. In each capture try, the initial frame is randomly altered for some unknown reason. The first several frames often fail to synchronize, but the later frames become stable. We are able to extract the images captured under structured light which are synchronized with the display.
+
+![procam_sync_adhoc_capture](docs/procam_sync_adhoc_captured.png)
+
+### Result
+
+I have tested the ad-hoc solution on my Windows machine with a 60 Hz monitor, which is connected to the NVIDIA GeForce RTX 4070 GPU via an HDMI cable. The camera is FLIR Blackfly S with a USB 3.0 connection. The code is attached in `procam_capture.py`.
+
+The following image is captured images. I put the number of structured light images in the center of each image, and the background is red/green/blue in the order of the number. I used 30 dummy images (gray color) before and after the structured light images. Please zoom in on the image to see the numbers.
+
+![captured_screenshot](docs/captured_screenshot.jpg)
+
+The captured images mainly show sequential numbers, but some images have the ghost of the previous/next image. This issue remains a limitation of this method.
