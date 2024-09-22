@@ -68,6 +68,8 @@ screen.set_next(img_rgb)
 screen.swap_buffers()
 ```
 
+Note that, as mentioned in the original code, [a byte size of the columns of the image must be divisible by 4](https://github.com/kamino410/gl_imshow/blob/706c93d440bb377be505d0703913c866e45f6ede/main.cpp#L73-L75). This wrapper does not check the byte size, so you need to ensure that the image size is appropriate.
+
 ## Projector-Camera Synchronization Capture
 
 To achieve fast structured light capture, we need to be able to swap images at the display refresh rate and ensure that the projector (or display) and camera can capture images in sync reliably. The pyglimshow provides a fast imshow function via OpenGl backend, and thus, we can use the vertical synchronization (VSync) feature in GLFW to wait until the buffer is swapped.
