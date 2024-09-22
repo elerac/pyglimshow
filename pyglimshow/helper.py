@@ -11,13 +11,13 @@ def put_text_centered(img, text, font, fontscale, color, thickness):
     return cv2.putText(img, text, (int(textX), int(textY)), font, fontscale, color, thickness, cv2.LINE_AA)
 
 
-def rand_color_image(size: Tuple[int, int], hue: Optional[int] = None, sat: Optional[int] = None, val: Optional[int] = None) -> npt.NDArray[np.uint8]:
-    """Generate a random color image.
+def create_backround_image(shape: Tuple[int, int, int], hue: Optional[int] = None, sat: Optional[int] = None, val: Optional[int] = None) -> npt.NDArray[np.uint8]:
+    """Create a random color image.
 
     Parameters
     ----------
-    size : Tuple[int, int]
-        Image size (width, height).
+    shape : Tuple[int, int, int]
+        Shape of the image (height, width, 3).
     hue : Optional[int], optional
         Hue value (0-179), by default None
     sat : Optional[int], optional
@@ -30,8 +30,9 @@ def rand_color_image(size: Tuple[int, int], hue: Optional[int] = None, sat: Opti
     npt.NDArray[np.uint8]
         Random color image. (height, width, 3) shape.
     """
-
-    w, h = size
+    h, w, ch = shape
+    if ch != 3:
+        raise ValueError("The number of channels must be 3.")
 
     if hue is None:
         hue = np.random.randint(0, 180)
@@ -41,21 +42,21 @@ def rand_color_image(size: Tuple[int, int], hue: Optional[int] = None, sat: Opti
         val = np.random.randint(0, 255)
 
     color = cv2.cvtColor(np.array([[[hue, sat, val]]], dtype=np.uint8), cv2.COLOR_HSV2BGR)
-    img = np.full((h, w, 3), color, dtype=np.uint8)
-    return img
+    image = np.full((h, w, 3), color, dtype=np.uint8)
+    return image
 
 
-def gen_countup_imglist(size: Tuple[int, int], num: int, hue: Optional[int] = None, sat: int = 140, val: int = 160) -> List[npt.NDArray[np.uint8]]:
-    """Generate a list of images with count-up numbers.
+def create_number_image(shape: Tuple[int, int, int], i: int, hue: Optional[int] = None, sat: int = 140, val: int = 160) -> npt.NDArray[np.uint8]:
+    """Create a image with the number at the center with the random color background.
 
     Parameters
     ----------
-    size : Tuple[int, int]
-        Image size (width, height).
-    num : int
-        Number of images.
+    shape : Tuple[int, int, int]
+        Shape of the image (height, width, 3).
+    i : int
+        The number of images.
     hue : Optional[int], optional
-        Hue value (0-179), by default None
+        Hue value (0-179), by default None (random)
     sat : int, optional
         Saturation value (0-255), by default 140
     val : int, optional
@@ -63,19 +64,23 @@ def gen_countup_imglist(size: Tuple[int, int], num: int, hue: Optional[int] = No
 
     Returns
     -------
-    List[npt.NDArray[np.uint8]]
-        List of images. Each image has a count-up number.
+    npt.NDArray[np.uint8]
+        Image with the number. (height, width, 3) shape.
     """
 
-    zfill_w = len(str(num))
-    w, h = size
-    image_list = []
-    for i in range(num):
-        image = rand_color_image((h, w), hue, sat, val)
-        font = cv2.FONT_HERSHEY_SIMPLEX
-        fontscale = 30.0 * h / 2160.0
-        color = (255, 255, 255)
-        thickness = int(fontscale * 2)
-        image = put_text_centered(image, f"{i}".zfill(zfill_w), font, fontscale, color, thickness)
-        image_list.append(image)
-    return image_list
+    zfill_w = max(3, len(str(i)))
+
+    if i % 3 == 0:
+        image = create_backround_image(shape, 0, sat, val)
+    elif i % 3 == 1:
+        image = create_backround_image(shape, 60, sat, val)
+    else:
+        image = create_backround_image(shape, 120, sat, val)
+
+    h, w, _ = shape
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    fontscale = 30.0 * h / 2160.0
+    color = (255, 255, 255)
+    thickness = int(fontscale * 2)
+    image = put_text_centered(image, f"{i}".zfill(zfill_w), font, fontscale, color, thickness)
+    return image
