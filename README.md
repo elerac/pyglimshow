@@ -107,5 +107,5 @@ The captured images mainly show sequential numbers, but some images have the gho
 
 #### Projector-Camera Synchronization
 
-In addition to the monitor-camera synchronization, a projector-camera system is tested by [Suhyun et al., "Dense Dispersed Structured Light for Hyperspectral 3D Imaging of Dynamic Scenes"](https://shshin1210.github.io/DDSL/).
+In addition to the monitor-camera synchronization, a projector-camera system is tested by [Shin et al., "Dense Dispersed Structured Light for Hyperspectral 3D Imaging of Dynamic Scenes"](https://shshin1210.github.io/DDSL/).
 The camera is FLIR Blackfly S (BFS-U3-13Y3C), and the projector is Epson CO-FH02, which is connected to the NVIDIA GeForce RTX 3060 GPU via an HDMI cable. As demonstrated in the paper, we successfully captured structured light images at 60 fps.
