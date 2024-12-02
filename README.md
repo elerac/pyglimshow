@@ -95,6 +95,8 @@ During the capturing process, the camera will capture the following sequence of 
 
 ### Result
 
+#### Monitor-Camera Synchronization
+
 I have tested the ad-hoc solution on my Windows machine with a 60 Hz monitor (SAMSUNG, U32J590UQK), which is connected to the NVIDIA GeForce RTX 4070 GPU via an HDMI cable. The camera is FLIR Blackfly S (BFS-U3-13Y3C). The code is attached in `procam_capture.py`.
 
 The following image is captured images. I put the number of structured light images in the center of each image, and the background is red/green/blue in the order of the number. I used 30 dummy images (gray color) before and after the structured light images. Please zoom in on the image to see the numbers.
@@ -102,3 +104,8 @@ The following image is captured images. I put the number of structured light ima
 ![captured_screenshot](docs/captured_screenshot.jpg)
 
 The captured images mainly show sequential numbers, but some images have the ghost of the previous/next image. And also, synchronization sometimes fails. These issues remain a limitation of this method.
+
+#### Projector-Camera Synchronization
+
+In addition to the monitor-camera synchronization, a projector-camera system is tested by [Suhyun et al., "Dense Dispersed Structured Light for Hyperspectral 3D Imaging of Dynamic Scenes"](https://shshin1210.github.io/DDSL/).
+The camera is FLIR Blackfly S (BFS-U3-13Y3C), and the projector is Epson CO-FH02, which is connected to the NVIDIA GeForce RTX 3060 GPU via an HDMI cable. As demonstrated in the paper, we successfully captured structured light images at 60 fps.
